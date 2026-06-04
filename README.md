@@ -216,23 +216,68 @@ generation, text-to-speech. Presets: server-side named config bundles
 
 ## 6. Feature-by-feature verdict (everything)
 
-Legend: 🟢 helps clyro · 🟡 only if multi-provider · 🔴 not clyro's job · ✅ done
+**Legend:** 🟢 helps clyro · 🟡 only if multi-provider · 🔴 not clyro's job · ✅ done & tested
 
-**Models & access:** 690+ catalog 🟢✅ · one API key 🔴 · OpenAI-compatible
-endpoint 🔴 · model variants 🟡 · live metadata 🟢✅
-**Routing & reliability:** provider routing 🟡 · allow/deny 🟡 · model fallback
-🟡 · auto failover/load-balancing 🟡 · `max_price` 🟡 · throughput/latency
-filters 🔴
-**Cost & billing:** live pricing 🟢✅ · actual billed cost 🟢(needs routing
-through OR) · unified billing 🔴 · BYOK 🔴 · usage dashboard 🔴
-**Privacy & governance:** `data_collection:deny` 🟡 · `zdr` 🟡 · reports actual
-provider 🟡 · enterprise SSO/org 🔴
-**Plugins:** web search 🔴 · PDF 🔴 · response healing 🔴 · context compression
-🟡(minor)
-**Multimodal:** image 🔴 · audio/video 🔴 · image-gen/TTS 🔴
-**Request features:** structured outputs 🔴(policy-enforce 🟡) · tool calling 🔴
-· reasoning controls 🔴 · streaming 🔴 · presets 🟡⚠️(overlaps clyro) · app
-attribution 🔴
+### A. Models & access
+| Feature | Verdict | Why |
+|---|---|---|
+| 690+ model catalog | 🟢 ✅ | our source of price + model data |
+| One API key for all providers | 🔴 | convenience, not clyro's role |
+| OpenAI-compatible endpoint | 🔴 | convenience |
+| Model variants (`:free`/`:nitro`/`:floor`/…) | 🟡 | routing presets; only if multi-provider |
+| Live model metadata | 🟢 ✅ | context limits + capabilities |
+
+### B. Routing & reliability
+| Feature | Verdict | Why |
+|---|---|---|
+| Provider routing (price/speed/latency) | 🟡 | needs multi-provider |
+| Provider allow / deny (`only`/`ignore`) | 🟡 | maps to clyro `in_list`/`not_in_list` |
+| Model fallback (`models:[...]`) | 🟡 | really the agent's job |
+| Auto failover / load-balancing | 🟡 | gateway behavior |
+| `max_price` ceiling | 🟡 | per-call cost cap |
+| Throughput / latency filters | 🔴 | gateway plumbing |
+
+### C. Cost & billing
+| Feature | Verdict | Why |
+|---|---|---|
+| Live pricing | 🟢 ✅ | fixes clyro's made-up costs |
+| Actual billed cost in response | 🟢 | only if routing *through* OpenRouter |
+| Unified billing / credits | 🔴 | OpenRouter's billing |
+| BYOK (bring your own key) | 🔴 | OpenRouter routing feature |
+| Usage / activity dashboard | 🔴 | clyro has its own tracing |
+
+### D. Privacy & governance
+| Feature | Verdict | Why |
+|---|---|---|
+| `data_collection: deny` | 🟡 | only meaningful when routing through OR |
+| `zdr: true` (zero data retention) | 🟡 | same |
+| Reports actual provider used | 🟡 | audit value; only if multi-provider |
+| Enterprise SSO/SAML, org controls | 🔴 | overlaps clyro itself |
+
+### E. Plugins
+| Feature | Verdict | Why |
+|---|---|---|
+| Web search | 🔴 | agent capability; clyro would *govern* it |
+| PDF parsing | 🔴 | agent capability |
+| Response healing | 🔴 | gateway feature |
+| Context compression (middle-out) | 🟡 | minor |
+
+### F. Multimodal
+| Feature | Verdict | Why |
+|---|---|---|
+| Image input (vision/OCR) | 🔴 | agent capability |
+| Audio / video input | 🔴 | agent capability |
+| Image generation, text-to-speech | 🔴 | agent capability |
+
+### G. Request features
+| Feature | Verdict | Why |
+|---|---|---|
+| Structured outputs (JSON schema) | 🔴 | passthrough (could be policy-enforced 🟡) |
+| Tool / function calling | 🔴 | passthrough |
+| Reasoning controls | 🔴 | passthrough |
+| Streaming | 🔴 | passthrough |
+| Presets | 🟡 ⚠️ | overlaps what clyro itself does — watch |
+| App attribution headers | 🔴 | convenience |
 
 ---
 
